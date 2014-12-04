@@ -9,10 +9,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 //import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
+
 import java.lang.Math;
 
 
+
 public class Gps_LocationFinderDemo extends Activity {
+
+    public static final String TAG = "Gps_LocationFinderDemo";
 
     LocationManager lm;
     Location myLocation;
@@ -40,7 +45,7 @@ public class Gps_LocationFinderDemo extends Activity {
             locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
                     // Called when a new location is found by the network location provider.
-                    makeUseOfNewLocation();
+                    makeUseOfNewLocation(location);
                 }
 
                 public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -58,16 +63,18 @@ public class Gps_LocationFinderDemo extends Activity {
 
             // Register the listener with the Location Manager to receive location updates
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            Log.d(TAG,"myLocation.getLatitude" + myLocation.getLatitude() + "    (bjs)");    //bjs
         }
         else{
 //            gpsData.setText("GPS is Disable");
-            return;
+            Log.d(TAG,"GPS is disabled!   (bjs)");    //bjs
+//            return;
         }
     }
 
     // Displays coordinates of Source and strategic locations for testing
-    public void makeUseOfNewLocation() {
-        //myLocation = location;
+    public void makeUseOfNewLocation(Location location) {
+        myLocation = location;
         setStrategicLocations();
         /*gpsData.setText("Source Node - lat: "+myLocation.getLatitude()+" longitude: "+myLocation.getLongitude()
         		+ "\r\nStrategic L1 (90 deg) - lat: " + sourceL1.getLatitude() + " long:" + sourceL1.getLongitude()
@@ -85,6 +92,7 @@ public class Gps_LocationFinderDemo extends Activity {
         // Strategic node 90 degrees from Source Node
         sourceL1.setLatitude(myLocation.getLatitude() + broadcastDistance/latitudeDistance);
         sourceL1.setLongitude(myLocation.getLongitude());
+        Log.d(TAG,"Location info here    (bjs)");    //bjs
 
         // Strategic node 210 degrees from Source Node
         sourceL2.setLongitude(myLocation.getLongitude() - broadcastDistance*Math.cos(210)/longitudeDistance);
