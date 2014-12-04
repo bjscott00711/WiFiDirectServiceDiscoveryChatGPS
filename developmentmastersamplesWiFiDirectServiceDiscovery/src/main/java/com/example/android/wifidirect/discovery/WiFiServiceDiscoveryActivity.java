@@ -73,6 +73,7 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
 
     private TextView statusTxtView;
 
+
     public Handler getHandler() {
         Log.d(TAG1,"getHandler()    (bjs)");    //bjs
         return handler;
@@ -106,6 +107,8 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
         getFragmentManager().beginTransaction()
                 .add(R.id.container_root, servicesList, "services").commit();
 
+        Gps_LocationFinderDemo gpsManager = new Gps_LocationFinderDemo();
+        gpsManager.setStrategicLocations();
     }
 
     @Override
