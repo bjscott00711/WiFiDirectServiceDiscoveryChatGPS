@@ -97,6 +97,8 @@ public class WiFiChatFragment extends Fragment {
                 TextView nameText = (TextView) v
                         .findViewById(android.R.id.text1);
 
+
+                //TODO Add GPS coordinates to message - bjs
                 if (nameText != null) {
                     nameText.setText(message);
                     if (message.startsWith("Me: ")) {

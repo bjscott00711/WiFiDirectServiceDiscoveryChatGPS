@@ -312,6 +312,7 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
     @Override
     public boolean handleMessage(Message msg) {
         Log.d(TAG1,"handleMessage(Message msg)    (bjs)");    //bjs
+        //TODO Parse GPS coordinates from sender's message - bjs
         switch (msg.what) {
             case MESSAGE_READ:
                 byte[] readBuf = (byte[]) msg.obj;
