@@ -24,6 +24,15 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.content.Intent;
+
+import android.location.Location;           //bjs
+import android.location.LocationListener;   //bjs;
+import android.location.LocationManager;    //bjs
+import android.os.Bundle;                   //bjs
+//import android.widget.TextView;           //bjs
+import android.widget.Toast;                //bjs
+
 
 import com.example.android.wifidirect.discovery.WiFiChatFragment.MessageTarget;
 import com.example.android.wifidirect.discovery.WiFiDirectServicesList.DeviceClickListener;
@@ -31,6 +40,7 @@ import com.example.android.wifidirect.discovery.WiFiDirectServicesList.WiFiDevic
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,6 +83,11 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
 
     private TextView statusTxtView;
 
+    private LocationManager lm;                         //bjs
+    private Location myLocation;                        //bjs
+    private LocationListener locationListener;          //bjs
+    Location bestResult;                                //bjs
+    TextView gpsData;       //bjs
 
     public Handler getHandler() {
         Log.d(TAG1,"getHandler()    (bjs)");    //bjs
@@ -89,8 +104,12 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG1,"onCreate(Bundle savedInstanceState)    (bjs)");    //bjs
         super.onCreate(savedInstanceState);
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
+
         setContentView(R.layout.main);
         statusTxtView = (TextView) findViewById(R.id.status_text);
+        //gpsData = (TextView)findViewById(R.id.textview);
 
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -107,13 +126,17 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
         getFragmentManager().beginTransaction()
                 .add(R.id.container_root, servicesList, "services").commit();
 
-        Gps_LocationFinderDemo gpsManager = new Gps_LocationFinderDemo();
-        gpsManager.setStrategicLocations();
+//        getLastLocation();          // bjs
+        getLocation();              // bjs
+        //Gps_LocationFinderDemo gpsManager = new Gps_LocationFinderDemo();
+        //gpsManager.setStrategicLocations();
     }
 
     @Override
     protected void onRestart() {
         Log.d(TAG1,"onRestart()    (bjs)");    //bjs
+        getLastLocation();          // bjs
+
         Fragment frag = getFragmentManager().findFragmentByTag("services");
         if (frag != null) {
             getFragmentManager().beginTransaction().remove(frag).commit();
@@ -312,6 +335,8 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
         super.onResume();
         receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
         registerReceiver(receiver, intentFilter);
+
+        getLastLocation();          // bjs
     }
 
     @Override
@@ -360,4 +385,91 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
         String current = statusTxtView.getText().toString();
         statusTxtView.setText(current + "\n" + status);
     }
+
+    public void getLocation(){
+
+        Boolean gps_enabled = false;
+        lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if(gps_enabled){
+
+            // Listener that responds to location updates
+            locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    // Called when a new location is found by the network location provider.
+                    myLocation = location;
+                    statusTxtView.setText("Source Node - lat: "+myLocation.getLatitude()+" longitude: "+myLocation.getLongitude());
+                }
+
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                    Toast.makeText(getBaseContext(), "Out Of Service", Toast.LENGTH_LONG).show();
+                }
+
+                public void onProviderEnabled(String provider) {
+                    Toast.makeText(getBaseContext(), "Provider enable", Toast.LENGTH_LONG).show();
+                }
+
+                public void onProviderDisabled(String provider) {
+                    Toast.makeText(getBaseContext(), "Provider disable", Toast.LENGTH_LONG).show();
+                }
+            };
+
+            // Register the listener with the Location Manager to receive location updates
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            getLastLocation();
+            Log.d(TAG,"myLocation.getLatitude" + myLocation.getLatitude() + "    (bjs)");    //bjs
+        }
+        else{
+//            gpsData.setText("GPS is Disable");
+            Log.d(TAG,"GPS is disabled!   (bjs)");    //bjs
+
+//            return;
+        }
+    }
+
+
+
+    private void getLastLocation() {
+        long minTime = 9999990;
+        long bestTime = 99999990;
+
+        float bestAccuracy = 999999;
+
+        List<String> matchingProviders = lm.getAllProviders();
+        for (String provider : matchingProviders) {
+            Location location = lm.getLastKnownLocation(provider);
+            if (location != null) {
+                float accuracy = location.getAccuracy();
+                long time = location.getTime();
+
+                if ((time > minTime && accuracy < bestAccuracy)) {
+                    bestResult = location;
+                    bestAccuracy = accuracy;
+                    bestTime = time;
+                    Log.d(TAG1,"getLastLocation(): bestAccuracy " + bestAccuracy + "; bestTime " +
+                            bestTime + "        (bjs)");    //bjs
+                } else if (time < minTime &&
+                    bestAccuracy == Float.MAX_VALUE && time > bestTime) {
+                    bestResult = location;
+                    bestTime = time;
+                    Log.d(TAG1,"getLastLocation(): bestAccuracy " + bestAccuracy + "; bestTime " +
+                            bestTime + "        (bjs)");    //bjs
+                }
+            }
+        }
+        //myLocation.set(bestResult);
+        if(bestResult == null) {
+            bestResult.reset();
+            return;
+        } else {
+            myLocation = bestResult;
+            statusTxtView.setText("Source Node - lat: "+myLocation.getLatitude()+" longitude: "+myLocation.getLongitude());
+        }
+
+    }
+
+
+
+
+
 }

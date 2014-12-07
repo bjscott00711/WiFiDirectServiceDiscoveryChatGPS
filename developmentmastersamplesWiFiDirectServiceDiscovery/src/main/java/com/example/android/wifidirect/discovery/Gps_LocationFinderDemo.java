@@ -21,20 +21,21 @@ public class Gps_LocationFinderDemo extends Activity {
 
     LocationManager lm;
     Location myLocation;
+    LocationListener locationListener;
+
+//*
     Location sourceL1 = new Location("");		// 90 degrees from Source Node
     Location sourceL2 = new Location("");		// 330 degree from Source Node
     Location sourceL3 = new Location("");		// 210 degree from Source Node
     double broadcastDistance = 30;    	// Radius of the regular hexagon
     double latitudeDistance = 111000;	// Apprx distance (meters) of one degree latitude
     double longitudeDistance = 98068;	// Apprx distance (meters) of one degree longitude at Earth's equator (111320 meters at equator)
-    LocationListener locationListener;
-//    TextView gpsData;
 
+    //TextView gpsData;
+//*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //      setContentView(R.layout.gps_demo);
-        //       gpsData = (TextView)findViewById(R.id.textview);
 
         Boolean gps_enabled = false;
         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -75,13 +76,13 @@ public class Gps_LocationFinderDemo extends Activity {
     // Displays coordinates of Source and strategic locations for testing
     public void makeUseOfNewLocation(Location location) {
         myLocation = location;
-        setStrategicLocations();
+        //setStrategicLocations();
         /*gpsData.setText("Source Node - lat: "+myLocation.getLatitude()+" longitude: "+myLocation.getLongitude()
         		+ "\r\nStrategic L1 (90 deg) - lat: " + sourceL1.getLatitude() + " long:" + sourceL1.getLongitude()
         		+ "\r\nStrategic L2 (210 deg) - lat: " + sourceL2.getLatitude() + " long:" + sourceL2.getLongitude()
         		+ "\r\nStrategic L3 (330 deg) - lat: " + sourceL3.getLatitude() + " long:" + sourceL3.getLongitude()
         		+ "\r\nBroadcast Distance: " + broadcastDistance
-        		) ;      
+        		) ;
 		*/
     }
 
