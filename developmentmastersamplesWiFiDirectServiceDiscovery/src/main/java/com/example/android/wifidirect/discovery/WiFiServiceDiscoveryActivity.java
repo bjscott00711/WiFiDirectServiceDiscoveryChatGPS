@@ -192,12 +192,10 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
     }
 
     private void discoverService() {
-
         /*
          * Register listeners for DNS-SD services. These are callbacks invoked
          * by the system when a service is actually discovered.
          */
-
         Log.d(TAG1,"discoverService()    (bjs)");    //bjs
         manager.setDnsSdResponseListeners(channel,
                 new DnsSdServiceResponseListener() {
@@ -322,10 +320,9 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
                 (chatFragment).pushMessage("Buddy: " + readMessage);
                 break;
 
-            case MY_HANDLE:
+            case MY_HANDLE:     //called from ChatManager line 41
                 Object obj = msg.obj;
-                (chatFragment).setChatManager((ChatManager) obj);
-
+                (chatFragment).setChatManager((ChatManager) obj);  // I think this is the UI
         }
         return true;
     }
@@ -391,7 +388,7 @@ public class WiFiServiceDiscoveryActivity extends Activity implements
 
         Boolean gps_enabled = false;
         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);   // gps_enabled always false on LG since no SIM card.
         if(gps_enabled){
 
             // Listener that responds to location updates

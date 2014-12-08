@@ -45,7 +45,7 @@ public class WiFiChatFragment extends Fragment {
                     @Override
                     public void onClick(View arg0) {
                         if (chatManager != null) {
-                            chatManager.write(chatLine.getText().toString()
+                            chatManager.write(chatLine.getText().toString() //TODO Add myLocation
                                     .getBytes());
                             pushMessage("Me: " + chatLine.getText().toString());
                             chatLine.setText("");

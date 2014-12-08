@@ -32,7 +32,6 @@ public class GroupOwnerSocketHandler extends Thread {
             pool.shutdownNow();
             throw e;
         }
-
     }
 
     /**

@@ -49,7 +49,7 @@ public class WiFiDirectServicesList extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO Auto-generated method stub
+        // Auto-generated method stub
         Log.d(TAG,"onListItemClick(ListView l, View v, int position, long id)    (bjs)");    //bjs
         ((DeviceClickListener) getActivity()).connectP2p((WiFiP2pService) l
                 .getItemAtPosition(position));
