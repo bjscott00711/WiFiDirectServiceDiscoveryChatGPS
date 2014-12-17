@@ -16,6 +16,11 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+/* Adapted from the example at https://android.googlesource.com/platform/development/+
+    /master/samples/WiFiDirectServiceDiscovery/src/com/example/android/wifidirect/
+    discovery/WiFiServiceDiscoveryActivity.java
+*/
+
 /**
  * A simple ListFragment that shows the available services as published by the
  * peers

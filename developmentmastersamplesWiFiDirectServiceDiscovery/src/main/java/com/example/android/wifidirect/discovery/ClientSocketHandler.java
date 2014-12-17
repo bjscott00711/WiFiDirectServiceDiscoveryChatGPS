@@ -9,6 +9,11 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+/* Adapted from the example at https://android.googlesource.com/platform/development/+
+    /master/samples/WiFiDirectServiceDiscovery/src/com/example/android/wifidirect/
+    discovery/WiFiServiceDiscoveryActivity.java
+*/
+
 public class ClientSocketHandler extends Thread {
 
     private static final String TAG = "ClientSocketHandler";

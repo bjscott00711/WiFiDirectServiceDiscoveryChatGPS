@@ -16,6 +16,11 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+/* Adapted from the example at https://android.googlesource.com/platform/development/+
+    /master/samples/WiFiDirectServiceDiscovery/src/com/example/android/wifidirect/
+    discovery/WiFiServiceDiscoveryActivity.java
+*/
+
 /**
  * This fragment handles chat related UI which includes a list view for messages
  * and a message entry field with send button.
@@ -45,7 +50,7 @@ public class WiFiChatFragment extends Fragment {
                     @Override
                     public void onClick(View arg0) {
                         if (chatManager != null) {
-                            chatManager.write(chatLine.getText().toString() //TODO Add myLocation
+                            chatManager.write((chatLine.getText()/* + "   test"*/).toString() //TODO Add myLocation
                                     .getBytes());
                             pushMessage("Me: " + chatLine.getText().toString());
                             chatLine.setText("");

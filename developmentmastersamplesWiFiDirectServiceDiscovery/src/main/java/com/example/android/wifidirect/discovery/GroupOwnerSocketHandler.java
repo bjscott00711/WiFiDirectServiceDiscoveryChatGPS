@@ -10,6 +10,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+
+/* Adapted from the example at https://android.googlesource.com/platform/development/+
+    /master/samples/WiFiDirectServiceDiscovery/src/com/example/android/wifidirect/
+    discovery/WiFiServiceDiscoveryActivity.java
+*/
+
+
 /**
  * The implementation of a ServerSocket handler. This is used by the wifi p2p
  * group owner.

@@ -17,6 +17,12 @@ package com.example.android.wifidirect.discovery;
  * limitations under the License.
  */
 
+/* Adapted from the example at https://android.googlesource.com/platform/development/+
+    /master/samples/WiFiDirectServiceDiscovery/src/com/example/android/wifidirect/
+    discovery/WiFiServiceDiscoveryActivity.java
+*/
+
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;

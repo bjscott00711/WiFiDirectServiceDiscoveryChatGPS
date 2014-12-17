@@ -9,6 +9,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+/* Adapted from the example at https://android.googlesource.com/platform/development/+
+    /master/samples/WiFiDirectServiceDiscovery/src/com/example/android/wifidirect/
+    discovery/WiFiServiceDiscoveryActivity.java
+*/
+
 /**
  * Handles reading and writing of messages with socket buffers. Uses a Handler
  * to post messages to UI thread for UI updates.
@@ -72,9 +77,17 @@ public class ChatManager implements Runnable {
         Log.d(TAG1, "write(byte[] buffer)    (bjs)");  //bjs
         try {
             oStream.write(buffer);
+          //  oStream.write(buffer);  TODO  This rewrites the buffer on chat.  Need to send gps data here!
         } catch (IOException e) {
             Log.e(TAG, "Exception during write", e);
         }
     }
+
+
+
+
+
+
+
 
 }

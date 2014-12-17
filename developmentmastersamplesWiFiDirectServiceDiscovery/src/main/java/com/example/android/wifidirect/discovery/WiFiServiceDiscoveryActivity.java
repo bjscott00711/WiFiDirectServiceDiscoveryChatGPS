@@ -54,6 +54,12 @@ import java.util.Map;
  * {@code WiFiChatFragment} is then added to the the main activity which manages
  * the interface and messaging needs for a chat session.
  */
+
+/* Adapted from the example at https://android.googlesource.com/platform/development/+
+    /master/samples/WiFiDirectServiceDiscovery/src/com/example/android/wifidirect/
+    discovery/WiFiServiceDiscoveryActivity.java
+*/
+
 public class WiFiServiceDiscoveryActivity extends Activity implements
         DeviceClickListener, Handler.Callback, MessageTarget,
         ConnectionInfoListener {
